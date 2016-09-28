@@ -1,0 +1,16 @@
+imports:
+    - { resource: services/definition.yml }
+
+
+services:
+    app.yaml_parser:
+        class: Symfony\Component\Yaml\Yaml
+
+    app.form_handler:
+        class: AppBundle\Form\Handler
+
+    app.definition:
+        class: AppBundle\Definition\Definition
+        arguments:
+            - "@app.yaml_parser"
+            - "%kernel.root_dir%/config/services/definition.yml"

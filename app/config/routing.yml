@@ -1,0 +1,7 @@
+app_definition:
+    resource: "@AppBundle/Controller/DefinitionController.php"
+    type:     rest
+
+app_monitoring:
+    resource: "@AppBundle/Controller/MonitoringController.php"
+    type:     rest
