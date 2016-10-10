@@ -49,4 +49,16 @@ trait RestFormTrait
         return $this->get('app.form_handler')->getErrors($form);
     }
 
+    /**
+     * Format and create response from form error
+     *
+     * @param Form $form
+     *
+     * @return Response
+     */
+    protected function createFormErrorResponse(Form $form)
+    {
+        return $this->view(['errors' => $this->getFormErrors($form)], 422);
+    }
+
 }

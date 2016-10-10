@@ -1,0 +1,14 @@
+EPE\Component\NotificationEntity\Entity\Profile:
+    properties:
+        id:
+            read_only: true
+        parameters:
+            expose: false
+            exclude: true
+
+    relations:
+        - rel: self
+          href:
+            route: get_profile
+            parameters:
+                id: expr(object.getId())

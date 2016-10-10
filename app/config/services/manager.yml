@@ -1,0 +1,24 @@
+services:
+    app.notification.manager:
+        class: AppBundle\Manager\NotificationManager
+        arguments:
+            - "@app.resource_adapter"
+            - "%app.notification.entity%"
+
+    app.notification_type.manager:
+        class: AppBundle\Manager\NotificationTypeManager
+        arguments:
+            - "@app.resource_adapter"
+            - "%app.notification_type.entity%"
+
+    app.profile.manager:
+        class: AppBundle\Manager\ProfileManager
+        arguments:
+            - "@app.resource_adapter"
+            - "%app.profile.entity%"
+
+    app.profile_parameter.manager:
+        class: AppBundle\Manager\ProfileParameterManager
+        arguments:
+            - "@app.resource_adapter"
+            - "%app.profile_parameter.entity%"

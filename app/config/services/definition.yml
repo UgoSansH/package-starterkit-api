@@ -1,9 +1,6 @@
 # Exposed configuration api
 parameters:
-    available_status:
-        - example
-        - raoul
-        - withouth
-    gender:
-        - male
-        - female
+    notification_format:
+        - push
+        - email
+        - sms

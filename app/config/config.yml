@@ -13,7 +13,7 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
-    csrf_protection: ~
+    csrf_protection: false
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -44,16 +44,14 @@ doctrine:
         charset:  UTF8
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        mappings:
+            notification:
+                type:      yml
+                alias:     Notification
+                is_bundle: false
+                prefix:    EPE\Component\NotificationEntity\Entity
+                dir:       "%kernel.root_dir%/../vendor/epe/component-notification-doctrine/src/Resources/config/notification"
 
-# Swiftmailer Configuration
-swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
 
 fos_rest:
     serializer:
@@ -80,6 +78,9 @@ jms_serializer:
     metadata:
         auto_detection: true
         directories:
+            Notification:
+                namespace_prefix: "EPE\\Component\\NotificationEntity\\Entity"
+                path: "%kernel.root_dir%/config/serializer/notification/"
 
 nelmio_cors:
     paths:

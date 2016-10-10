@@ -1,0 +1,34 @@
+services:
+    app.notification.form_type:
+        class: AppBundle\Form\Type\NotificationType
+        calls:
+            - [ setDataClass, ['%app.notification.entity%'] ]
+            - [ setTypeManager, ['@app.notification_type.manager'] ]
+            - [ setProfileManager, ['@app.profile.manager'] ]
+        tags:
+            - { name: form.type }
+
+    app.notification_type.form_type:
+        class: AppBundle\Form\Type\NotificationTypeType
+        calls:
+            - [ setDataClass, ['%app.notification_type.entity%'] ]
+            - [ setDefinition, ['@app.definition'] ]
+        tags:
+            - { name: form.type }
+
+    app.profile.form_type:
+        class: AppBundle\Form\Type\ProfileType
+        calls:
+            - [ setDataClass, ['%app.profile.entity%'] ]
+        tags:
+            - { name: form.type }
+
+    app.profile_parameter.form_type:
+        class: AppBundle\Form\Type\ProfileParameterType
+        calls:
+            - [ setDataClass, ['%app.profile_parameter.entity%'] ]
+            - [ setDefinition, ['@app.definition'] ]
+            - [ setTypeManager, ['@app.notification_type.manager'] ]
+            - [ setProfileManager, ['@app.profile.manager'] ]
+        tags:
+            - { name: form.type }

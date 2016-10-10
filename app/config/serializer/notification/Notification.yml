@@ -1,0 +1,10 @@
+EPE\Component\NotificationEntity\Entity\Notification:
+    properties:
+        id:
+            read_only: true
+        profile:
+            expose: false
+            exclude: true
+        type:
+            expose: false
+            exclude: true

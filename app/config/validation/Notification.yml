@@ -1,0 +1,10 @@
+EPE\Component\NotificationEntity\Entity\Notification:
+    properties:
+        title:
+            - NotBlank:
+                message: validator.constraints.not_blank
+            - Length:
+                minMessage: validator.constraints.length_min_3
+                maxMessage: validator.constraints.length_min_32
+                min: 3
+                max: 64

@@ -1,6 +1,13 @@
 imports:
     - { resource: services/definition.yml }
+    - { resource: services/manager.yml }
+    - { resource: services/form.yml }
 
+parameters:
+    app.notification.entity:      EPE\Component\NotificationEntity\Entity\Notification
+    app.notification_type.entity: EPE\Component\NotificationEntity\Entity\NotificationType
+    app.profile.entity:           EPE\Component\NotificationEntity\Entity\Profile
+    app.profile_parameter.entity: EPE\Component\NotificationEntity\Entity\ProfileParameter
 
 services:
     app.yaml_parser:
@@ -14,3 +21,8 @@ services:
         arguments:
             - "@app.yaml_parser"
             - "%kernel.root_dir%/config/services/definition.yml"
+
+    app.resource_adapter:
+        class: Ugosansh\Component\EntityManager\Adapter\DoctrineResourceAdapter
+        arguments:
+            - "@doctrine.orm.entity_manager"

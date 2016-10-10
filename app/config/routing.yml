@@ -5,3 +5,23 @@ app_definition:
 app_monitoring:
     resource: "@AppBundle/Controller/MonitoringController.php"
     type:     rest
+
+app_notification_type:
+    resource: "@AppBundle/Controller/TypeController.php"
+    type:     rest
+    prefix:   /v1
+
+app_notification:
+    resource: "@AppBundle/Controller/NotificationController.php"
+    type:     rest
+    prefix:   /v1
+
+app_profile:
+    resource: "@AppBundle/Controller/ProfileController.php"
+    type:     rest
+    prefix:   /v1
+
+app_profile_parameter:
+    resource: "@AppBundle/Controller/ProfileParameterController.php"
+    type:     rest
+    prefix:   /v1
