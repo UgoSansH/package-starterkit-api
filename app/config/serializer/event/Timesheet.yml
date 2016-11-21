@@ -1,0 +1,7 @@
+EPE\Component\EventEntity\Entity\Timesheet:
+    properties:
+        id:
+            read_only: true
+        calendar:
+            expose: false
+            exclude: true

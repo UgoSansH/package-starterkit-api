@@ -1,6 +1,6 @@
 {
-    "name": "ugosansh/package-starterkit-api",
-    "license": "apache",
+    "name": "epe/service-event-api",
+    "license": "proprietary",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -39,8 +39,9 @@
         "willdurand/hateoas-bundle":            "^1.2",
         "nelmio/api-doc-bundle":                "^2.13",
         "nelmio/cors-bundle":                   "^1.4",
-        "epe/component-notification-doctrine": "^1.0",
-        "epe/component-notification-entity": "^1.0"
+        "epe/component-event-doctrine":         "^1.1",
+        "epe/component-event-entity":           "^1.1",
+        "stof/doctrine-extensions-bundle": "^1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

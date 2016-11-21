@@ -1,0 +1,7 @@
+EPE\Component\EventEntity\Entity\Address:
+    properties:
+        id:
+            read_only: true
+        event:
+            expose: false
+            exclude: true

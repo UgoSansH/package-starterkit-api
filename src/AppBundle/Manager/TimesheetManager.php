@@ -5,9 +5,9 @@ namespace AppBundle\Manager;
 use Ugosansh\Component\EntityManager\Manager;
 
 /**
- * Notification type Manager
+ * Timesheet Manager
  */
-class NotificationTypeManager extends Manager
+class TimesheetManager extends Manager
 {
     use Traits\CountTrait;
     use Traits\PartialUpdateTrait;

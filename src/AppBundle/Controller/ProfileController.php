@@ -7,7 +7,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use AppBundle\Form\Type\ProfileType;
-use EPE\Component\NotificationEntity\Entity\Profile;
+use EPE\Component\EventEntity\Entity\Profile;
 
 /**
  * Profile entity controller

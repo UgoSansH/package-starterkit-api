@@ -6,46 +6,46 @@ use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use AppBundle\Form\Type\NotificationType;
-use EPE\Component\NotificationEntity\Entity\Notification;
+use AppBundle\Form\Type\CalendarType;
+use EPE\Component\EventEntity\Entity\Calendar;
 
 /**
- * Notification entity controller
+ * Calendar entity controller
  */
-class NotificationController extends Controller
+class CalendarController extends Controller
 {
     /**
-     * Get notification entity manager
+     * Get calendar entity manager
      *
      * @return ManagerInterface
      */
     protected function getManager()
     {
-        return $this->get('app.notification.manager');
+        return $this->get('app.calendar.manager');
     }
 
     /**
      * Create form edit
      *
-     * @param Notification $notification
+     * @param Calendar $calendar
      *
      * @return View
      */
-    protected function createEditForm(Notification $notification)
+    protected function createEditForm(Calendar $calendar)
     {
-        $form = $this->createRestForm(NotificationType::class, $notification);
+        $form = $this->createRestForm(CalendarType::class, $calendar);
 
         if ($this->processForm($form)) {
-            $this->getManager()->save($notification);
+            $this->getManager()->save($calendar);
 
-            return $this->forward('AppBundle:Notification:getNotification', ['id' => $notification->getId()]);
+            return $this->forward('AppBundle:Calendar:getCalendar', ['id' => $calendar->getId()]);
         }
 
         return $this->createFormErrorResponse($form);
     }
 
     /**
-     * Get notification
+     * Get calendar
      *
      * @param ParamFetcher $paramFetcher
      * @param integer      $id
@@ -53,7 +53,7 @@ class NotificationController extends Controller
      * @return View
      *
      * @ApiDoc(
-     *      section="Notification",
+     *      section="Calendar",
      *      statusCodes={
      *          200="Ok",
      *          404="Tag not found"
@@ -61,24 +61,24 @@ class NotificationController extends Controller
      * )
      *
      */
-    public function getNotificationAction(ParamFetcher $paramFetcher, $id)
+    public function getCalendarAction(ParamFetcher $paramFetcher, $id)
     {
-        if (!$notification = $this->getManager()->find($id)) {
-            return $this->createErrorResponse(['notification.not_found'], 404);
+        if (!$calendar = $this->getManager()->find($id)) {
+            return $this->createErrorResponse(['calendar.not_found'], 404);
         }
 
-        return $this->view($notification);
+        return $this->view($calendar);
     }
 
     /**
-     * Get notification list
+     * Get calendar list
      *
      * @param ParamFetcher $paramFetcher
      *
      * @return View
      *
      * @ApiDoc(
-     *      section="Notification",
+     *      section="Calendar",
      *      statusCodes={
      *          200="Ok"
      *      }
@@ -88,10 +88,14 @@ class NotificationController extends Controller
      * @Rest\QueryParam(name="offset", requirements="\d+", default="0", description="Offset")
      * @Rest\QueryParam(name="order", requirements="(id|type),(desc|asc)", default="id,desc", description="Order (id|type),(desc|asc) (ex : id,desc)")
      */
-    public function getNotificationsAction(ParamFetcher $paramFetcher)
+    public function getProfilesCalendarsAction(ParamFetcher $paramFetcher, $id)
     {
-        $notifications = $this->getManager()->findBy(
-            [],
+        if (!$profile = $this->get('app.profile.manager')->find($id)) {
+            return $this->view(['error' => 'profile.not_found'], 404);
+        }
+
+        $calendars = $this->getManager()->findBy(
+            ['funder' => $profile],
             $this->filterOrderQueryParam($paramFetcher),
             $paramFetcher->get('limit'),
             $paramFetcher->get('offset')
@@ -99,34 +103,34 @@ class NotificationController extends Controller
 
         $length = $this->getManager()->count([]);
 
-        if (empty($notifications)) {
-            $notifications = null;
+        if (empty($calendars)) {
+            $calendars = null;
         }
 
-        return $this->view($notifications, is_null($notifications) ? 201 : 200, $this->createPageHeader($paramFetcher, $length));
+        return $this->view($calendars, is_null($calendars) ? 201 : 200, $this->createPageHeader($paramFetcher, $length));
     }
 
     /**
-     * Create new notification
+     * Create new calendar
      *
      * @param ParamFetcher $paramFetcher
      *
      * @return View
      *
      * @ApiDoc(
-     *      section="Notification",
+     *      section="Calendar",
      *      statusCodes={
      *          200="Ok",
      *          422="Unprocessable entity",
-     *          500="Failed to persist notification entity"
+     *          500="Failed to persist calendar entity"
      *      },
      *      input={
-     *          "class"="AppBundle\Form\Type\NotificationType",
+     *          "class"="AppBundle\Form\Type\CalendarType",
      *          "name"=""
      *      }
      * )
      */
-    public function postNotificationsAction(ParamFetcher $paramFetcher)
+    public function postCalendarsAction(ParamFetcher $paramFetcher)
     {
         $entity = $this->getManager()->createEntity();
 
@@ -134,7 +138,7 @@ class NotificationController extends Controller
     }
 
     /**
-     * Update notification
+     * Update calendar
      *
      * @param ParamFetcher $paramFetcher
      * @param integer      $id
@@ -142,30 +146,30 @@ class NotificationController extends Controller
      * @return View
      *
      * @ApiDoc(
-     *      section="Notification",
+     *      section="Calendar",
      *      statusCodes={
      *          200="Ok",
-     *          404="Not found notification",
+     *          404="Not found calendar",
      *          422="Unprocessable entity",
-     *          500="Failed to persist notification entity"
+     *          500="Failed to persist calendar entity"
      *      },
      *      input={
-     *          "class"="AppBundle\Form\Type\NotificationType",
+     *          "class"="AppBundle\Form\Type\CalendarType",
      *          "name"=""
      *      }
      * )
      */
-    public function putNotificationsAction(ParamFetcher $paramFetcher, $id)
+    public function putCalendarsAction(ParamFetcher $paramFetcher, $id)
     {
         if (!$entity = $this->getManager()->find($id)) {
-            return $this->createErrorResponse(['notification.not_found'], 404);
+            return $this->createErrorResponse(['calendar.not_found'], 404);
         }
 
         return $this->createEditForm($entity);
     }
 
     /**
-     * Partial update notification
+     * Partial update calendar
      *
      * @param ParamFetcher $paramFetcher
      * @param integer      $id
@@ -173,25 +177,25 @@ class NotificationController extends Controller
      * @return View
      *
      * @ApiDoc(
-     *      section="Notification",
+     *      section="Calendar",
      *      statusCodes={
      *          200="Ok",
      *          422="Unprocessable entity",
-     *          500="Failed to persist notification entity"
+     *          500="Failed to persist calendar entity"
      *      }
      * )
      */
-    public function patchNotificationsAction(ParamFetcher $paramFetcher, $id)
+    public function patchCalendarsAction(ParamFetcher $paramFetcher, $id)
     {
         if (!$entity = $this->getManager()->find($id)) {
-            return $this->createErrorResponse(['notification.not_found'], 404);
+            return $this->createErrorResponse(['calendar.not_found'], 404);
         }
 
-        return $this->partialUpdate($entity, $this->getManager(), 'AppBundle:Notification:getNotification');
+        return $this->partialUpdate($entity, $this->getManager(), 'AppBundle:Calendar:getCalendar');
     }
 
     /**
-     * Remove notification
+     * Remove calendar
      *
      * @param ParamFetcher $paramFetcher
      * @param integer      $id
@@ -199,18 +203,18 @@ class NotificationController extends Controller
      * @return View
      *
      * @ApiDoc(
-     *      section="Notification",
+     *      section="Calendar",
      *      statusCodes={
      *          200="Ok",
      *          422="Unprocessable entity",
-     *          500="Failed to remove notification entity"
+     *          500="Failed to remove calendar entity"
      *      }
      * )
      */
-    public function deleteNotificationsAction(ParamFetcher $paramFetcher, $id)
+    public function deleteCalendarsAction(ParamFetcher $paramFetcher, $id)
     {
         if (!$entity = $this->getManager()->find($id)) {
-            return $this->createErrorResponse(['notification.not_found'], 404);
+            return $this->createErrorResponse(['calendar.not_found'], 404);
         }
 
         if ($this->getManager()->remove($entity)) {

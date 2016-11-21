@@ -47,10 +47,10 @@ doctrine:
         mappings:
             notification:
                 type:      yml
-                alias:     Notification
+                alias:     Event
                 is_bundle: false
-                prefix:    EPE\Component\NotificationEntity\Entity
-                dir:       "%kernel.root_dir%/../vendor/epe/component-notification-doctrine/src/Resources/config/notification"
+                prefix:    EPE\Component\EventEntity\Entity
+                dir:       "%kernel.root_dir%/../vendor/epe/component-event-doctrine/src/Resources/config/event"
 
 
 fos_rest:
@@ -79,8 +79,8 @@ jms_serializer:
         auto_detection: true
         directories:
             Notification:
-                namespace_prefix: "EPE\\Component\\NotificationEntity\\Entity"
-                path: "%kernel.root_dir%/config/serializer/notification/"
+                namespace_prefix: "EPE\\Component\\EventEntity\\Entity"
+                path: "%kernel.root_dir%/config/serializer/event/"
 
 nelmio_cors:
     paths:
@@ -90,3 +90,8 @@ nelmio_cors:
             allow_methods: ['POST', 'OPTIONS', 'PUT', 'GET', 'PATCH', 'HEAD', 'DELETE']
             allow_headers: ['origin', 'x-requested-with', 'content-type', 'authorization']
 
+stof_doctrine_extensions:
+    default_locale: fr_FR
+    orm:
+        default:
+            sluggable: true

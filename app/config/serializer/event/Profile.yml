@@ -1,8 +1,11 @@
-EPE\Component\NotificationEntity\Entity\Profile:
+EPE\Component\EventEntity\Entity\Profile:
     properties:
         id:
             read_only: true
         parameters:
+            expose: false
+            exclude: true
+        unavailabilities:
             expose: false
             exclude: true
 

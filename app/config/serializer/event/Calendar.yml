@@ -1,0 +1,51 @@
+EPE\Component\EventEntity\Entity\Calendar:
+    properties:
+        id:
+            read_only: true
+        dateRemoved:
+            expose: false
+            exclude: true
+        funder:
+            expose: false
+            exclude: true
+        planning:
+            expose: false
+            exclude: true
+        events:
+            expose: false
+            exclude: true
+        days:
+            expose: false
+            exclude: true
+        unavailabilities:
+            expose: false
+            exclude: true
+        timesheets:
+            expose: false
+            exclude: true
+
+
+    virtual_properties:
+      getFunderId:
+        serialized_name: funder
+
+
+    relations:
+        - rel: self
+          href:
+            route: get_calendar
+            parameters:
+                id: expr(object.getId())
+
+        - rel: timesheets
+          href:
+            route: get_calendars_timesheets
+            parameters:
+                id: expr(object.getId())
+          exclusion:
+            exclude_if: expr(object.getTimesheets().count() == 0)
+          embedded:
+            content: expr(object.getTimesheets())
+            exclusion:
+              exclude_if: expr(object.getTimesheets().count() == 0)
+

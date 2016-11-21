@@ -1,18 +1,25 @@
-app_definition:
-    resource: "@AppBundle/Controller/DefinitionController.php"
-    type:     rest
-
-app_monitoring:
-    resource: "@AppBundle/Controller/MonitoringController.php"
-    type:     rest
-
-app_notification_type:
-    resource: "@AppBundle/Controller/TypeController.php"
+app_calendar:
+    resource: "@AppBundle/Controller/CalendarController.php"
     type:     rest
     prefix:   /v1
 
-app_notification:
-    resource: "@AppBundle/Controller/NotificationController.php"
+app_event:
+    resource: "@AppBundle/Controller/EventController.php"
+    type:     rest
+    prefix:   /v1
+
+app_unavailability:
+    resource: "@AppBundle/Controller/UnavailabilityController.php"
+    type:     rest
+    prefix:   /v1
+
+app_address:
+    resource: "@AppBundle/Controller/AddressController.php"
+    type:     rest
+    prefix:   /v1
+
+app_timesheet:
+    resource: "@AppBundle/Controller/TimesheetController.php"
     type:     rest
     prefix:   /v1
 
@@ -21,7 +28,3 @@ app_profile:
     type:     rest
     prefix:   /v1
 
-app_profile_parameter:
-    resource: "@AppBundle/Controller/ProfileParameterController.php"
-    type:     rest
-    prefix:   /v1

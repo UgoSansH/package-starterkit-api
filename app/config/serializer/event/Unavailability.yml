@@ -1,0 +1,24 @@
+EPE\Component\EventEntity\Entity\Unavailability:
+    properties:
+        id:
+            read_only: true
+        profile:
+            expose: false
+            exclude: true
+        calendar:
+            expose: false
+            exclude: true
+
+
+    virtual_properties:
+      getProfileId:
+        serialized_name: id_profile
+      getCalendarId:
+        serialized_name: id_calendar
+
+    relations:
+        - rel: self
+          href:
+            route: get_unavailability
+            parameters:
+                id: expr(object.getId())

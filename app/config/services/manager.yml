@@ -1,15 +1,27 @@
 services:
-    app.notification.manager:
-        class: AppBundle\Manager\NotificationManager
+    app.address.manager:
+        class: AppBundle\Manager\AddressManager
         arguments:
             - "@app.resource_adapter"
-            - "%app.notification.entity%"
+            - "%app.address.entity%"
 
-    app.notification_type.manager:
-        class: AppBundle\Manager\NotificationTypeManager
+    app.calendar.manager:
+        class: AppBundle\Manager\CalendarManager
         arguments:
             - "@app.resource_adapter"
-            - "%app.notification_type.entity%"
+            - "%app.calendar.entity%"
+
+    app.event.manager:
+        class: AppBundle\Manager\EventManager
+        arguments:
+            - "@app.resource_adapter"
+            - "%app.event.entity%"
+
+    app.timesheet.manager:
+        class: AppBundle\Manager\TimesheetManager
+        arguments:
+            - "@app.resource_adapter"
+            - "%app.timesheet.entity%"
 
     app.profile.manager:
         class: AppBundle\Manager\ProfileManager
@@ -17,8 +29,8 @@ services:
             - "@app.resource_adapter"
             - "%app.profile.entity%"
 
-    app.profile_parameter.manager:
-        class: AppBundle\Manager\ProfileParameterManager
+    app.unavailability.manager:
+        class: AppBundle\Manager\UnavailabilityManager
         arguments:
             - "@app.resource_adapter"
-            - "%app.profile_parameter.entity%"
+            - "%app.unavailability.entity%"

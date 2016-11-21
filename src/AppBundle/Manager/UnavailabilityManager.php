@@ -5,9 +5,9 @@ namespace AppBundle\Manager;
 use Ugosansh\Component\EntityManager\Manager;
 
 /**
- * Notification Manager
+ * Unavailability parameter Manager
  */
-class NotificationManager extends Manager
+class UnavailabilityManager extends Manager
 {
     use Traits\CountTrait;
     use Traits\PartialUpdateTrait;

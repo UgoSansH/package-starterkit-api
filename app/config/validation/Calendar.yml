@@ -1,10 +1,10 @@
-EPE\Component\NotificationEntity\Entity\Notification:
+EPE\Component\EventEntity\Entity\Calendar:
     properties:
-        title:
+        name:
             - NotBlank:
                 message: validator.constraints.not_blank
             - Length:
                 minMessage: validator.constraints.length_min_3
-                maxMessage: validator.constraints.length_min_32
+                maxMessage: validator.constraints.length_min_64
                 min: 3
                 max: 64

@@ -1,0 +1,65 @@
+EPE\Component\EventEntity\Entity\Event:
+    properties:
+        id:
+            read_only: true
+        dateRemoved:
+            expose: false
+            exclude: true
+        calendar:
+            expose: false
+            exclude: true
+        location:
+            expose: false
+            exclude: true
+        subEvents:
+            expose: false
+            exclude: true
+        superEvent:
+            expose: false
+            exclude: true
+        contributors:
+            expose: false
+            exclude: true
+
+
+    virtual_properties:
+      getCalendarId:
+        serialized_name: id_calendar
+      getSuperEventId:
+        serialized_name: id_super_event
+
+
+    relations:
+        - rel: self
+          href:
+            route: get_event
+            parameters:
+                id: expr(object.getId())
+
+        - rel: calendar
+          href:
+            route: get_calendar
+            parameters:
+                id: expr(object.getCalendar().getId())
+
+        - rel: address
+          href:
+            route: get_address
+            parameters:
+                id: expr(object.getLocation().getId())
+          exclusion:
+            exclude_if: expr(object.getLocation() == null)
+          embedded:
+            content: expr(object.getLocation())
+            exclusion:
+              exclude_if: expr(object.getLocation() == null)
+              groups: [Default, Detail]
+
+        - rel: subEvents
+          exclusion:
+            exclude_if: expr(object.getSubEvents().count() == 0)
+          embedded:
+            content: expr(object.getSubEvents())
+            exclusion:
+              exclude_if: expr(object.getSubEvents().count() == 0)
+              groups: [Default, Detail]

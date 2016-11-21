@@ -9,6 +9,11 @@ use Ugosansh\Component\EntityManager\EntityInterface;
 trait PartialUpdateTrait
 {
     /**
+     * @var array
+     */
+    protected $partialDateFields = [];
+
+    /**
      * Update partial entity
      *
      * @param EntityInterface $entity
@@ -23,7 +28,7 @@ trait PartialUpdateTrait
     {
         if ($operation == 'replace') {
 
-            $field    = lcfirst(preg_replace_callback('/_(.?)/', function ($matches) { return strtoupper($matches[0]); }, strtolower($path)));
+            $field    = lcfirst(preg_replace_callback('/_(.?)/', function ($matches) { return strtoupper($matches[1]); }, strtolower($path)));
             $setter   = sprintf('set%s', ucfirst($field));
 
             if (!method_exists($entity, $setter)) {
@@ -31,6 +36,8 @@ trait PartialUpdateTrait
             }
 
             if (!method_exists($entity, $setter)) {
+                    printf('set%s', ucfirst($field)) ."<br />\n\n<br />";
+                    printf('add%s', ucfirst($field));die;
                throw new BadMethodCallException(sprintf(
                     'Attempted to call an undefined method named "%s" or "%s" of class "%s".',
                     sprintf('set%s', ucfirst($field)),
@@ -39,8 +46,8 @@ trait PartialUpdateTrait
                 ));
             }
 
-            if (in_array($field, ['dateModified', 'dateRemoved'])) {
-                $value = DateTime::createFromFormat('d/m/Y H:i:s', $value);
+            if (array_key_exists($field, $this->partialDateFields)) {
+                $value = DateTime::createFromFormat($this->partialDateFields[$field], $value);
             }
 
             $entity->$setter($value);

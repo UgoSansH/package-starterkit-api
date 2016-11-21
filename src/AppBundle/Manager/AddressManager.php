@@ -5,9 +5,9 @@ namespace AppBundle\Manager;
 use Ugosansh\Component\EntityManager\Manager;
 
 /**
- * Profile parameter Manager
+ * AddressManager Manager
  */
-class ProfileParameterManager extends Manager
+class AddressManager extends Manager
 {
     use Traits\CountTrait;
     use Traits\PartialUpdateTrait;

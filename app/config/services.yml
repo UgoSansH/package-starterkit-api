@@ -4,10 +4,12 @@ imports:
     - { resource: services/form.yml }
 
 parameters:
-    app.notification.entity:      EPE\Component\NotificationEntity\Entity\Notification
-    app.notification_type.entity: EPE\Component\NotificationEntity\Entity\NotificationType
-    app.profile.entity:           EPE\Component\NotificationEntity\Entity\Profile
-    app.profile_parameter.entity: EPE\Component\NotificationEntity\Entity\ProfileParameter
+    app.address.entity:        EPE\Component\EventEntity\Entity\Address
+    app.calendar.entity:       EPE\Component\EventEntity\Entity\Calendar
+    app.event.entity:          EPE\Component\EventEntity\Entity\Event
+    app.timesheet.entity:      EPE\Component\EventEntity\Entity\Timesheet
+    app.profile.entity:        EPE\Component\EventEntity\Entity\Profile
+    app.unavailability.entity: EPE\Component\EventEntity\Entity\Unavailability
 
 services:
     app.yaml_parser:

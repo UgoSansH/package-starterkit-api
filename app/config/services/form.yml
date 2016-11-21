@@ -1,18 +1,33 @@
 services:
-    app.notification.form_type:
-        class: AppBundle\Form\Type\NotificationType
+    app.calendar.form_type:
+        class: AppBundle\Form\Type\CalendarType
         calls:
-            - [ setDataClass, ['%app.notification.entity%'] ]
-            - [ setTypeManager, ['@app.notification_type.manager'] ]
+            - [ setDataClass, ['%app.calendar.entity%'] ]
             - [ setProfileManager, ['@app.profile.manager'] ]
         tags:
             - { name: form.type }
 
-    app.notification_type.form_type:
-        class: AppBundle\Form\Type\NotificationTypeType
+    app.event.form_type:
+        class: AppBundle\Form\Type\EventType
         calls:
-            - [ setDataClass, ['%app.notification_type.entity%'] ]
-            - [ setDefinition, ['@app.definition'] ]
+            - [ setDataClass, ['%app.event.entity%'] ]
+            - [ setEventManager, ['@app.event.manager'] ]
+            - [ setCalendarManager, ['@app.calendar.manager'] ]
+        tags:
+            - { name: form.type }
+
+    app.unavailability.form_type:
+        class: AppBundle\Form\Type\UnavailabilityType
+        calls:
+            - [ setDataClass, ['%app.unavailability.entity%'] ]
+            - [ setCalendarManager, ['@app.calendar.manager'] ]
+        tags:
+            - { name: form.type }
+
+    app.address.form_type:
+        class: AppBundle\Form\Type\AddressType
+        calls:
+            - [ setDataClass, ['%app.address.entity%'] ]
         tags:
             - { name: form.type }
 
@@ -23,12 +38,9 @@ services:
         tags:
             - { name: form.type }
 
-    app.profile_parameter.form_type:
-        class: AppBundle\Form\Type\ProfileParameterType
+    app.timesheet.form_type:
+        class: AppBundle\Form\Type\TimesheetType
         calls:
-            - [ setDataClass, ['%app.profile_parameter.entity%'] ]
-            - [ setDefinition, ['@app.definition'] ]
-            - [ setTypeManager, ['@app.notification_type.manager'] ]
-            - [ setProfileManager, ['@app.profile.manager'] ]
+            - [ setDataClass, ['%app.timesheet.entity%'] ]
         tags:
             - { name: form.type }
