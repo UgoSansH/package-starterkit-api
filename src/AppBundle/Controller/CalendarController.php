@@ -84,6 +84,59 @@ class CalendarController extends Controller
      *      }
      * )
      *
+     * @Rest\QueryParam(name="funder", requirements="\d+", default=NULL, description="Filter by Profile Id")
+     * @Rest\QueryParam(name="external_id", requirements="\d+", default=NULL, description="Filter by external Id")
+     * @Rest\QueryParam(name="limit", requirements="\d+", default=20, description="Limit")
+     * @Rest\QueryParam(name="offset", requirements="\d+", default="0", description="Offset")
+     * @Rest\QueryParam(name="order", requirements="(id|type),(desc|asc)", default="id,desc", description="Order (id|type),(desc|asc) (ex : id,desc)")
+     */
+    public function getCalendarsAction(ParamFetcher $paramFetcher)
+    {
+        $criteria = [];
+
+        if ($funder = $paramFetcher->get('funder')) {
+            if (!$profile = $this->get('app.profile.manager')->find($funder)) {
+                return $this->view(['error' => 'profile.not_found'], 404);
+            }
+
+            $criteria['funder'] = $profile;
+        }
+
+        if ($externalId = $paramFetcher->get('external_id')) {
+            $criteria['externalId'] = $externalId;
+        }
+
+        $calendars = $this->getManager()->findBy(
+            $criteria,
+            $this->filterOrderQueryParam($paramFetcher),
+            $paramFetcher->get('limit'),
+            $paramFetcher->get('offset')
+        );
+
+        $length = $this->getManager()->count($criteria);
+
+        if (empty($calendars)) {
+            $calendars = null;
+        }
+
+        return $this->view($calendars, is_null($calendars) ? 201 : 200, $this->createPageHeader($paramFetcher, $length));
+    }
+
+    /**
+     * Get calendar list
+     *
+     * @param ParamFetcher $paramFetcher
+     *
+     * @return View
+     *
+     * @ApiDoc(
+     *      section="Calendar",
+     *      statusCodes={
+     *          200="Ok"
+     *      }
+     * )
+     *
+     * @Rest\QueryParam(name="external_id", requirements="\d+", default=NULL, description="Filter by external Id")
      * @Rest\QueryParam(name="limit", requirements="\d+", default=20, description="Limit")
      * @Rest\QueryParam(name="offset", requirements="\d+", default="0", description="Offset")
      * @Rest\QueryParam(name="order", requirements="(id|type),(desc|asc)", default="id,desc", description="Order (id|type),(desc|asc) (ex : id,desc)")
@@ -94,14 +147,20 @@ class CalendarController extends Controller
             return $this->view(['error' => 'profile.not_found'], 404);
         }
 
+        $criteria = ['funder' => $profile];
+
+        if ($externalId = $paramFetcher->get('external_id')) {
+            $criteria['externalId'] = $externalId;
+        }
+
         $calendars = $this->getManager()->findBy(
-            ['funder' => $profile],
+            $criteria,
             $this->filterOrderQueryParam($paramFetcher),
             $paramFetcher->get('limit'),
             $paramFetcher->get('offset')
         );
 
-        $length = $this->getManager()->count([]);
+        $length = $this->getManager()->count($criteria);
 
         if (empty($calendars)) {
             $calendars = null;
